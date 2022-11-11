@@ -1,4 +1,3 @@
-// Online C compiler to run C program online
 #include <stdio.h>
 #define QUEUE_SIZE 5
 
@@ -27,8 +26,8 @@ int rear = -1;
 
 void display(int array[]) {
     int i ;
-    printf("\nDisplaying Queue contents : ")
-    for(i = front+1;i <= rear;i++) {
+    printf("\nDisplaying Queue contents : ");
+    for(i = front;i <= rear && i > 0 ;i++) {
         printf("\nQueue[%d] = %d",i,array[i]);
     }
     
@@ -36,22 +35,31 @@ void display(int array[]) {
 }
 
 void enqueue(int array[],int data) {
-    if(rear >= QUEUE_LENGTH-1) {
-        
-        if(front == -1) {
-            printf("\n Queue is full");
-            return;            
-        }
-
+    if(rear >= QUEUE_SIZE - 1) {
+        printf("\n Queue is full");
+        return;
+    }
+    if(front == -1 ) {
+        front++;
     }
     rear++;
     array[rear] = data;
     printf("\nPushing %d onto queue",data);
+    
 }
 
 void dequeue(int array[]) {
-    front++;
+    if(front>rear) {
+        printf("\n Queue is EMPTY");
+        front = rear = -1;
+        return;
+    }
     printf("\nRemoving %d from queue",array[front]);
+    front++;
+}
+
+void peek(int array[]) {
+    printf("\n%d is at top of the queue",array[front]);
 }
 
 int main() {
@@ -66,13 +74,24 @@ int main() {
     enqueue(queue,1);
     enqueue(queue,2);
     enqueue(queue,3);
+    enqueue(queue,4);
+    enqueue(queue,5);
+    
+    enqueue(queue,6); // Queue is full error
     
     display(queue);
     
     dequeue(queue);
+    peek(queue);
     dequeue(queue);
+    peek(queue);
     dequeue(queue);
-    
+    peek(queue);
+    dequeue(queue);
+    peek(queue);
+    dequeue(queue);
+    dequeue(queue); // Queue is Empty error
+
     display(queue);
     
 
